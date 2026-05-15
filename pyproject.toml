@@ -1,0 +1,30 @@
+[project]
+name = "sumerian-app"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.12, <3.14"
+dependencies = [
+    "gradio>=6.14.0",
+    "torch>=2.12.0",
+    "transformers>=5.8.1",
+]
+
+authors = [
+    {name = "Maxim Partin", email = "max.physmath.05@gmail.com"},
+    {name = "Michael Gadiev", email = "migadiev@edu.hse.ru"}
+]
+
+[[tool.uv.index]]
+name = "pypi"
+url = "https://pypi.org/simple"
+default = true
+
+[[tool.uv.index]]
+name = "pytorch-cu126"
+url = "https://download.pytorch.org/whl/cu126"
+
+[dependency-groups]
+dev = [
+    "ruff>=0.15.12",
+]
