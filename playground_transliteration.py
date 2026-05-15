@@ -11,6 +11,8 @@ ENC_TOK = "colesimmons/SumerianGlyphTokenizer_Roberta"
 DEC_TOK = "colesimmons/SumerianTransliterationTokenizer_Roberta"
 MAX_LENGTH = 128
 NUM_BEAMS = 5
+DEFAULT_HOST = "127.0.0.1"
+DEFAULT_PORT = 7860
 
 SAMPLE_GLYPHS = """ 
 𒑏𒐈𒋡𒁉𒅆𒂟
@@ -49,6 +51,17 @@ def parse_args(argv: Sequence[str] | None = None) -> argparse.Namespace:
         "--use-gpu",
         action="store_true",
         help="Use CUDA when it is available. By default the app runs on CPU.",
+    )
+    parser.add_argument(
+        "--host",
+        default=DEFAULT_HOST,
+        help=f"Host to bind the Gradio server to. Defaults to {DEFAULT_HOST}.",
+    )
+    parser.add_argument(
+        "--port",
+        default=DEFAULT_PORT,
+        type=int,
+        help=f"Port to bind the Gradio server to. Defaults to {DEFAULT_PORT}.",
     )
     return parser.parse_args(argv)
 
@@ -145,7 +158,7 @@ def main(argv: Sequence[str] | None = None) -> None:
     args = parse_args(argv)
     components = load_transliteration_components(use_gpu=args.use_gpu)
     demo = create_app(components)
-    demo.launch()
+    demo.launch(server_name=args.host, server_port=args.port)
 
 
 if __name__ == "__main__":
